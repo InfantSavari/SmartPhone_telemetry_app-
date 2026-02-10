@@ -65,17 +65,23 @@ fun Scan(sensorManager: SensorManager){
     val sensorList : List<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
     val len = sensorList.size
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.verticalScroll(enabled = true, state = rememberScrollState(), reverseScrolling = true)
+        modifier = Modifier.verticalScroll(enabled = true, state = rememberScrollState())
     ) {
         for( i in 0 until len step 2){
+            var temp: String = sensorList[i].name
+            temp = temp.replace("Goldfish ","")
             Row(
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                SensorCard(name = sensorList[i].name, image = null)
-                SensorCard(name = sensorList[i+1].name, image = null)
+                SensorCard(name = temp, image = null)
+                if(i+1 < len){
+                    temp = sensorList[i+1].name
+                    temp = temp.replace("Goldfish ","")
+                    SensorCard(name = temp, image = null)
+                }
             }
         }
     }
@@ -85,14 +91,19 @@ fun Scan(sensorManager: SensorManager){
 fun SensorCard(name: String, image : Painter?){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(5.dp),
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(6.dp).size(height = 130.dp, width = 150.dp),
         shape = RoundedCornerShape(4.dp)
     ) {
-        Text(name, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.align(Alignment.CenterHorizontally))
-        if(image != null){
-            Image(image, contentDescription = "graph image ", modifier= Modifier.size(18.dp).align(Alignment.CenterHorizontally))
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(name, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            if(image != null){
+                Image(image, contentDescription = "graph image ", modifier= Modifier.size(18.dp))
+            }
         }
-
     }
 }
 
