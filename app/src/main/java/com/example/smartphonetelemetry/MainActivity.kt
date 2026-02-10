@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import com.example.smartphonetelemetry.ui.theme.SmartPhoneTelemetryTheme
 
@@ -99,7 +100,7 @@ fun SensorCard(name: String, image : Painter?){
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(name, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            Text(name, fontWeight = FontWeight.Bold, fontSize = 12.sp, textAlign = TextAlign.Center)
             if(image != null){
                 Image(image, contentDescription = "graph image ", modifier= Modifier.size(18.dp))
             }
