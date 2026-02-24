@@ -29,12 +29,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
+import androidx.navigationevent.NavigationEvent
 import com.example.smartphonetelemetry.ui.theme.SmartPhoneTelemetryTheme
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sensorManager by lazy { getSystemService(Context.SENSOR_SERVICE) as SensorManager}
+//        val sensorManager by lazy { getSystemService(Context.SENSOR_SERVICE) as SensorManager}
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -44,65 +44,9 @@ class MainActivity : ComponentActivity() {
                     contentColor = Color(0xFFEAEAEA)
                 ) {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        Column(
-                            modifier = Modifier.padding(innerPadding),
-                            verticalArrangement = Arrangement.SpaceAround,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            Text("Sensors Active", fontWeight = FontWeight.Bold, fontSize = 30.sp, fontFamily = FontFamily.SansSerif, modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp))
-                            Scan(sensorManager)
-                        }
-
+                        HomeScreen(modifier = Modifier.padding(innerPadding))
                     }
                 }
-
-            }
-        }
-    }
-}
-
-@Composable
-fun Scan(sensorManager: SensorManager){
-    val sensorList : List<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
-    val len = sensorList.size
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.verticalScroll(enabled = true, state = rememberScrollState())
-    ) {
-        for( i in 0 until len step 2){
-            var temp: String = sensorList[i].name
-            temp = temp.replace("Goldfish ","")
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SensorCard(name = temp, image = null)
-                if(i+1 < len){
-                    temp = sensorList[i+1].name
-                    temp = temp.replace("Goldfish ","")
-                    SensorCard(name = temp, image = null)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun SensorCard(name: String, image : Painter?){
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(5.dp),
-        modifier = Modifier.padding(6.dp).size(height = 130.dp, width = 150.dp),
-        shape = RoundedCornerShape(4.dp)
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(name, fontWeight = FontWeight.Bold, fontSize = 12.sp, textAlign = TextAlign.Center)
-            if(image != null){
-                Image(image, contentDescription = "graph image ", modifier= Modifier.size(18.dp))
             }
         }
     }
